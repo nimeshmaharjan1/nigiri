@@ -28,7 +28,7 @@ const SushiCard = ({ sushi }: { sushi: T_Sushi }) => {
         </div>
       </CardContent>
       <CardHeader>
-        <CardTitle>{sushi.name}</CardTitle>
+        <CardTitle data-testid="sushi-card-title">{sushi.name}</CardTitle>
         <CardDescription className="flex items-center gap-2">
           <span>{sushi.type}</span>
           {isNigiri ? (

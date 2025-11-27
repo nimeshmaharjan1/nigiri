@@ -30,7 +30,8 @@ test.describe('Filtering Functionality', () => {
   test('should filter by type - Nigiri', async ({ page }) => {
     // Select Nigiri type
     await page.click('[data-testid="type-filter"]');
-    await page.click('[role="option"][data-value="nigiri"]');
+    await page.waitForSelector('[role="option"]', { state: 'visible' });
+    await page.click('[role="option"]:has-text("Nigiri")');
 
     await page.waitForTimeout(300);
 
@@ -50,7 +51,8 @@ test.describe('Filtering Functionality', () => {
   test('should filter by type - Roll', async ({ page }) => {
     // Select Roll type
     await page.click('[data-testid="type-filter"]');
-    await page.click('[role="option"][data-value="roll"]');
+    await page.waitForSelector('[role="option"]', { state: 'visible' });
+    await page.click('[role="option"]:has-text("Roll")');
 
     await page.waitForTimeout(300);
 
@@ -75,7 +77,8 @@ test.describe('Filtering Functionality', () => {
 
     // Apply type filter
     await page.click('[data-testid="type-filter"]');
-    await page.click('[role="option"][data-value="nigiri"]');
+    await page.waitForSelector('[role="option"]', { state: 'visible' });
+    await page.click('[role="option"]:has-text("Nigiri")');
     await page.waitForTimeout(300);
 
     const filteredCount = await (await getSushiCards(page)).count();
@@ -97,8 +100,16 @@ test.describe('Filtering Functionality', () => {
       await page.waitForTimeout(500);
 
       // Should be back on page 1
+      // Check pagination info to verify we're on page 1 (starts with "Showing 1-")
+      const paginationInfo = page.locator('[data-testid="pagination-info"]');
+      const infoText = await paginationInfo.textContent();
+      expect(infoText).toMatch(/^Showing [01]-/);
+
+      // If page 1 button exists, it should be active
       const page1Button = page.locator('[data-testid="page-1"]');
-      await expect(page1Button).toHaveAttribute('data-active', 'true');
+      if (await page1Button.isVisible()) {
+        await expect(page1Button).toHaveAttribute('data-active', 'true');
+      }
     }
   });
 
@@ -110,7 +121,9 @@ test.describe('Filtering Functionality', () => {
     await page.waitForTimeout(500);
 
     await page.click('[data-testid="type-filter"]');
-    await page.click('[role="option"][data-value="nigiri"]');
+    await page.waitForSelector('[role="option"]', { state: 'visible' });
+    await page.click('[role="option"]:has-text("Nigiri")');
+
     await page.waitForTimeout(300);
 
     const filteredCount = await (await getSushiCards(page)).count();

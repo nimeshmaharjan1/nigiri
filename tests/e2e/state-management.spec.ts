@@ -27,7 +27,9 @@ test.describe('State Management', () => {
   test('should maintain type filter across actions', async ({ page }) => {
     // Select Nigiri type
     await page.click('[data-testid="type-filter"]');
-    await page.click('[role="option"][data-value="nigiri"]');
+    await page.waitForSelector('[role="option"]', { state: 'visible' });
+    await page.click('[role="option"]:has-text("Nigiri")');
+
     await page.waitForTimeout(300);
 
     // Do other actions like pagination
@@ -49,7 +51,8 @@ test.describe('State Management', () => {
     await page.waitForTimeout(500);
 
     await page.click('[data-testid="type-filter"]');
-    await page.click('[role="option"][data-value="roll"]');
+    await page.waitForSelector('[role="option"]', { state: 'visible' });
+    await page.click('[role="option"]:has-text("Roll")');
     await page.waitForTimeout(300);
 
     // Clear filters
@@ -102,7 +105,10 @@ test.describe('State Management', () => {
     const cards = await getSushiCards(page);
     const initialCount = await cards.count();
     const firstCard = cards.first();
-    const sushiName = (await firstCard.locator('h3, h4').textContent()) || '';
+    const sushiName =
+      (await firstCard
+        .locator('[data-testid="sushi-card-title"]')
+        .textContent()) || '';
 
     // Delete item
     await firstCard.hover();
@@ -178,7 +184,8 @@ test.describe('State Management', () => {
 
     // Immediately change type filter
     await page.click('[data-testid="type-filter"]');
-    await page.click('[role="option"][data-value="nigiri"]');
+    await page.waitForSelector('[role="option"]', { state: 'visible' });
+    await page.click('[role="option"]:has-text("Nigiri")');
 
     // Wait for both to settle
     await page.waitForTimeout(800);

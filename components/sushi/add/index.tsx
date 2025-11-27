@@ -108,8 +108,13 @@ const AddSushiDialog = ({ ...props }: AlertDialogProps) => {
     },
     onSuccess: async () => {
       toast.success('Item added successfully');
+      // Close dialog first
       props.onOpenChange?.(false);
+      // Then cleanup state
       reset();
+      setUploadedFiles([]);
+      setFileProgresses({});
+      // Finally invalidate queries
       await queryClient.invalidateQueries({
         queryKey: [GET_ALL_SUSHI_QUERY_KEY],
       });
