@@ -9,8 +9,11 @@ import {
 import { RippleButton } from '@/components/ui/ripple-button';
 import { T_Sushi } from '@/types/sushi.types';
 import { CircleDotIcon, FishIcon, TrashIcon } from 'lucide-react';
+import { useState } from 'react';
+import ArchiveSushiDialog from '../delete';
 
 const SushiCard = ({ sushi }: { sushi: T_Sushi }) => {
+  const [showArchive, setShowArchive] = useState(false);
   const isNigiri = sushi.type.toLowerCase() === 'nigiri';
   return (
     <Card className="max-w-md pb-4 pt-0">
@@ -42,10 +45,19 @@ const SushiCard = ({ sushi }: { sushi: T_Sushi }) => {
         </CardDescription>
       </CardHeader>
       <CardFooter className="justify-end gap-3 max-sm:flex-col max-sm:items-stretch">
-        <RippleButton size={'sm'} variant={'destructive'}>
+        <RippleButton
+          size={'sm'}
+          variant={'destructive'}
+          onClick={() => setShowArchive(true)}
+        >
           <TrashIcon className="text-destructive size-3"></TrashIcon>Archive
         </RippleButton>
       </CardFooter>
+      <ArchiveSushiDialog
+        sushi={sushi}
+        open={showArchive}
+        onOpenChange={setShowArchive}
+      />
     </Card>
   );
 };

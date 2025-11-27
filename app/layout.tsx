@@ -2,6 +2,7 @@ import AppHeader from '@/components/layout/header';
 import { AppSidebar } from '@/components/layout/sidebar/app-sidebar';
 import { QueryProvider } from '@/components/providers/query-provider';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -24,6 +25,8 @@ export default function RootLayout({
               <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                 {children}
               </div>
+
+              <Toaster />
             </SidebarInset>
           </SidebarProvider>
         </QueryProvider>

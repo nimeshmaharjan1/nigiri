@@ -15,6 +15,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
 
   return (
     <Sonner
+      richColors
       theme={theme as ToasterProps['theme']}
       className="toaster group"
       icons={{
@@ -32,6 +33,8 @@ const Toaster = ({ ...props }: ToasterProps) => {
           '--border-radius': 'var(--radius)',
         } as React.CSSProperties
       }
+      closeButton
+      position="top-right"
       {...props}
     />
   );
