@@ -54,17 +54,23 @@ export async function fillSushiForm(
     pieces?: string;
   }
 ) {
-  await page.fill('[name="name"]', data.name);
-  await page.click('[name="type"]');
-  await page.click(`[role="option"]:has-text("${data.type}")`);
-  await page.fill('[name="price"]', data.price);
+  // Fill name
+  await page.fill('#name', data.name);
 
+  // Select type using Shadcn Select component
+  await page.click('#type');
+  await page.click(`[role="option"]:has-text("${data.type}")`);
+
+  // Fill price
+  await page.fill('#price', data.price);
+
+  // Conditional fields
   if (data.type === 'Nigiri' && data.fishType) {
-    await page.fill('[name="fishType"]', data.fishType);
+    await page.fill('#fishType', data.fishType);
   }
 
   if (data.type === 'Roll' && data.pieces) {
-    await page.fill('[name="pieces"]', data.pieces);
+    await page.fill('#pieces', data.pieces);
   }
 }
 

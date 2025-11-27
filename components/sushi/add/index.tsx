@@ -43,6 +43,7 @@ const AddSushiDialog = ({ ...props }: AlertDialogProps) => {
     watch,
     setValue,
     formState: { errors },
+    reset,
   } = useForm<T_CreateSushi>({
     resolver: zodResolver(createSushiSchema),
     defaultValues: {
@@ -108,6 +109,7 @@ const AddSushiDialog = ({ ...props }: AlertDialogProps) => {
     onSuccess: async () => {
       toast.success('Item added successfully');
       props.onOpenChange?.(false);
+      reset();
       await queryClient.invalidateQueries({
         queryKey: [GET_ALL_SUSHI_QUERY_KEY],
       });
@@ -365,7 +367,10 @@ const AddSushiDialog = ({ ...props }: AlertDialogProps) => {
             disabled={addMutation.isPending}
             type="button"
             variant="outline"
-            onClick={() => props.onOpenChange?.(false)}
+            onClick={() => {
+              props.onOpenChange?.(false);
+              reset();
+            }}
           >
             Cancel
           </Button>
