@@ -7,10 +7,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { RippleButton } from '@/components/ui/ripple-button';
-import { SushiType } from '@/types/sushi.types';
+import { T_Sushi } from '@/types/sushi.types';
 import { CircleDotIcon, FishIcon, TrashIcon } from 'lucide-react';
 
-const SushiCard = ({ sushi }: { sushi: SushiType }) => {
+const SushiCard = ({ sushi }: { sushi: T_Sushi }) => {
   const isNigiri = sushi.type.toLowerCase() === 'nigiri';
   return (
     <Card className="max-w-md pb-4 pt-0">
