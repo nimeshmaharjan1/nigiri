@@ -5,6 +5,6 @@ export interface SushiType {
   price: string;
   type: string;
   pieces: number;
-  fish: string;
+  fishType: string;
   id: string;
 }
