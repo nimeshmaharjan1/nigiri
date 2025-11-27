@@ -50,7 +50,10 @@ export default function SushiGrid({ sushiList }: SushiGridProps) {
 
   return (
     <>
-      <main className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <main
+        data-testid="sushi-grid"
+        className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
         {paginatedSushiList?.map((sushi, index) => (
           <motion.div
             key={sushi.id}

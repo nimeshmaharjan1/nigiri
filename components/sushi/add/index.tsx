@@ -125,7 +125,10 @@ const AddSushiDialog = ({ ...props }: AlertDialogProps) => {
 
   return (
     <AlertDialog {...props}>
-      <AlertDialogContent className="h-[calc(100vh-6rem)] gap-6">
+      <AlertDialogContent
+        data-testid="add-sushi-dialog"
+        className="h-[calc(100vh-6rem)] gap-6"
+      >
         <AlertDialogHeader>
           <AlertDialogTitle>Add a New Sushi Item</AlertDialogTitle>
           <AlertDialogDescription>
@@ -358,6 +361,7 @@ const AddSushiDialog = ({ ...props }: AlertDialogProps) => {
         </form>
         <AlertDialogFooter>
           <Button
+            data-testid="cancel-add"
             disabled={addMutation.isPending}
             type="button"
             variant="outline"

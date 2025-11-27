@@ -25,6 +25,7 @@ export default function FilterSection() {
       <div className="min-w-[200px] flex-1">
         <label className="mb-2 block text-sm font-medium">Search</label>
         <Input
+          data-testid="search-input"
           placeholder="Search by name or fish type..."
           type="search"
           value={searchQuery}
@@ -37,7 +38,7 @@ export default function FilterSection() {
           value={typeFilter}
           onValueChange={(value: T_SushiType) => setTypeFilter(value)}
         >
-          <SelectTrigger>
+          <SelectTrigger data-testid="type-filter">
             <SelectValue placeholder="Select type" />
           </SelectTrigger>
           <SelectContent>
@@ -52,6 +53,7 @@ export default function FilterSection() {
           Price Range: ${priceRange[0]} - ${priceRange[1]}
         </label>
         <Slider
+          data-testid="price-slider"
           min={0}
           max={100}
           step={5}

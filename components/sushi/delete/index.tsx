@@ -38,7 +38,7 @@ const ArchiveSushiDialog = ({
   });
   return (
     <AlertDialog {...props}>
-      <AlertDialogContent>
+      <AlertDialogContent data-testid="delete-dialog">
         <AlertDialogHeader>
           <AlertDialogTitle>
             Archive {sushi.name} (${sushi.price})?
@@ -49,10 +49,14 @@ const ArchiveSushiDialog = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={archiveMutation.isPending}>
+          <AlertDialogCancel
+            data-testid="cancel-delete"
+            disabled={archiveMutation.isPending}
+          >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
+            data-testid="confirm-delete"
             disabled={archiveMutation.isPending}
             onClick={() => archiveMutation.mutate()}
             className="bg-destructive hover:bg-destructive/90 text-white"

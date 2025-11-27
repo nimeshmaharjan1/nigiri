@@ -26,7 +26,10 @@ export default function PaginationSection({
 
   return (
     <div className="flex items-center justify-between">
-      <p className="text-muted-foreground text-sm">
+      <p
+        data-testid="pagination-info"
+        className="text-muted-foreground text-sm"
+      >
         Showing {startIndex + 1}-{Math.min(endIndex, totalItems)} of{' '}
         {totalItems} items
       </p>
@@ -34,6 +37,7 @@ export default function PaginationSection({
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
+              data-testid="prev-page"
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
               className={
                 currentPage === 1
@@ -53,6 +57,8 @@ export default function PaginationSection({
               return (
                 <PaginationItem key={page}>
                   <PaginationLink
+                    data-testid={`page-${page}`}
+                    data-active={currentPage === page}
                     onClick={() => setCurrentPage(page)}
                     isActive={currentPage === page}
                     className="cursor-pointer"
@@ -64,7 +70,7 @@ export default function PaginationSection({
             } else if (page === currentPage - 2 || page === currentPage + 2) {
               return (
                 <PaginationItem key={page}>
-                  <PaginationEllipsis />
+                  <PaginationEllipsis data-testid="pagination-ellipsis" />
                 </PaginationItem>
               );
             }
@@ -73,6 +79,7 @@ export default function PaginationSection({
 
           <PaginationItem>
             <PaginationNext
+              data-testid="next-page"
               onClick={() =>
                 setCurrentPage(Math.min(totalPages, currentPage + 1))
               }

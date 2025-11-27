@@ -16,7 +16,7 @@ const SushiCard = ({ sushi }: { sushi: T_Sushi }) => {
   const [showArchive, setShowArchive] = useState(false);
   const isNigiri = sushi.type.toLowerCase() === 'nigiri';
   return (
-    <Card className="max-w-md pb-4 pt-0">
+    <Card data-testid="sushi-card" className="max-w-md pb-4 pt-0">
       <CardContent className="relative px-0">
         <img
           src={sushi.image}
@@ -46,6 +46,7 @@ const SushiCard = ({ sushi }: { sushi: T_Sushi }) => {
       </CardHeader>
       <CardFooter className="justify-end gap-3 max-sm:flex-col max-sm:items-stretch">
         <RippleButton
+          data-testid="delete-button"
           size={'sm'}
           variant={'destructive'}
           onClick={() => setShowArchive(true)}
