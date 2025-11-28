@@ -6,62 +6,53 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
 import { useFilterStore } from '@/store/filter.store';
 import { T_SushiType } from '@/types/sushi.types';
+import { SearchIcon } from 'lucide-react';
 
 export default function FilterSection() {
-  const {
-    searchQuery,
-    typeFilter,
-    priceRange,
-    setSearchQuery,
-    setTypeFilter,
-    setPriceRange,
-  } = useFilterStore();
+  const { searchQuery, typeFilter, setSearchQuery, setTypeFilter } =
+    useFilterStore();
 
   return (
-    <section className="filters-section flex flex-wrap items-center gap-4">
-      <div className="min-w-[200px] flex-1">
-        <label className="mb-2 block text-sm font-medium">Search</label>
+    <section className="flex flex-1 items-center gap-3">
+      <div className="relative flex-1">
+        <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
         <Input
           data-testid="search-input"
-          placeholder="Search by name or fish type..."
+          placeholder="Search"
           type="search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-9"
         />
       </div>
-      <div className="w-[180px]">
-        <label className="mb-2 block text-sm font-medium">Type</label>
-        <Select
-          value={typeFilter}
-          onValueChange={(value: T_SushiType) => setTypeFilter(value)}
-        >
-          <SelectTrigger data-testid="type-filter">
-            <SelectValue placeholder="Select type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectItem value="Nigiri">Nigiri</SelectItem>
-            <SelectItem value="Roll">Roll</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="w-[250px]">
-        <label className="mb-2 block text-sm font-medium">
-          Price Range: ${priceRange[0]} - ${priceRange[1]}
-        </label>
-        <Slider
-          data-testid="price-slider"
-          min={0}
-          max={100}
-          step={5}
-          value={priceRange}
-          onValueChange={(value) => setPriceRange(value as [number, number])}
-          className="mt-2"
-        />
-      </div>
+      <Select
+        value={typeFilter}
+        onValueChange={(value: T_SushiType) => setTypeFilter(value)}
+      >
+        <SelectTrigger data-testid="type-filter" className="w-[140px]">
+          <span className="text-sm text-gray-600">Type:</span>
+          <SelectValue placeholder="All" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All</SelectItem>
+          <SelectItem value="Nigiri">Nigiri</SelectItem>
+          <SelectItem value="Roll">Roll</SelectItem>
+        </SelectContent>
+      </Select>
+      <Select defaultValue="all">
+        <SelectTrigger className="w-[140px]">
+          <span className="text-sm text-gray-600">Price:</span>
+          <SelectValue placeholder="All" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All</SelectItem>
+          <SelectItem value="low">$ - Low</SelectItem>
+          <SelectItem value="medium">$$ - Medium</SelectItem>
+          <SelectItem value="high">$$$ - High</SelectItem>
+        </SelectContent>
+      </Select>
     </section>
   );
 }

@@ -1,7 +1,4 @@
-import AppHeader from '@/components/layout/header';
-import { AppSidebar } from '@/components/layout/sidebar/app-sidebar';
 import { QueryProvider } from '@/components/providers/query-provider';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -18,22 +15,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>
-              <AppHeader></AppHeader>
-              <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                {children}
-              </div>
-
-              <Toaster />
-            </SidebarInset>
-          </SidebarProvider>
+          <div className="flex min-h-screen flex-col p-8">{children}</div>
+          <Toaster />
         </QueryProvider>
       </body>
     </html>
   );
 }
+
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
