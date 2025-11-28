@@ -23,7 +23,7 @@ export default function HomePage() {
     <div className="wrapper flex flex-col gap-6">
       <header className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Sushi Menu</h1>
+          <h1 className="text-2xl font-bold">Menu</h1>
           <RippleButton
             data-testid="add-sushi-button"
             onClick={() => setShowAddDialog(true)}

@@ -15,22 +15,7 @@ import {
 } from 'lucide-react';
 import * as React from 'react';
 
-import { NavMain } from '@/components/nav/nav-main';
-import { NavProjects } from '@/components/nav/nav-projects';
-import { NavUser } from '@/components/nav/nav-user';
-import { TeamSwitcher } from '@/components/shared/team-switcher';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarRail,
-} from '@/components/ui/sidebar';
+import { Sidebar, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
 
 // This is sample data.
 const data = {
@@ -171,9 +156,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        {/* <TeamSwitcher teams={data.teams} /> */}
+        <h2 className="mt-1 text-center text-2xl font-bold text-sky-500">
+          Li2
+        </h2>
       </SidebarHeader>
-      <SidebarContent>
+      {/* <SidebarContent>
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
           <SidebarGroupLabel>Home</SidebarGroupLabel>
           <SidebarMenu>
@@ -192,7 +180,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
-      </SidebarFooter>
+      </SidebarFooter> */}
       <SidebarRail />
     </Sidebar>
   );
