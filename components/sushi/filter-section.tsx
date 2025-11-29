@@ -26,7 +26,7 @@ export default function FilterSection() {
   return (
     <div className="flex w-full flex-wrap gap-4">
       {/* Search input - full width row on md */}
-      <div className="w-full md:basis-full lg:max-w-xs lg:basis-auto">
+      <div className="w-full md:basis-full xl:max-w-xs xl:basis-auto">
         <Input
           startIcon={SearchIcon}
           data-testid="search-input"
