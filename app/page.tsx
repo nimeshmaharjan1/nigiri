@@ -20,25 +20,21 @@ export default function HomePage() {
   if (sushiListQuery.isLoading) return <Loading />;
 
   return (
-    <div className="wrapper flex flex-col gap-6">
-      <header className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Menu</h1>
-          <RippleButton
-            data-testid="add-sushi-button"
-            onClick={() => setShowAddDialog(true)}
-          >
-            <PlusIcon /> Add Item
-          </RippleButton>
-          <AddSushiDialog
-            open={showAddDialog}
-            onOpenChange={setShowAddDialog}
-          />
-        </div>
+    <div className="wrapper flex flex-col">
+      <header className="flex justify-between gap-4 border-b bg-white p-4">
         <FilterSection />
+        <RippleButton
+          data-testid="add-sushi-button"
+          onClick={() => setShowAddDialog(true)}
+        >
+          <PlusIcon /> Add
+        </RippleButton>
+        <AddSushiDialog open={showAddDialog} onOpenChange={setShowAddDialog} />
       </header>
-      <SushiGrid sushiList={sushiList} />
-      <PaginationSection totalItems={filteredCount} />
+      <section className="flex flex-col gap-6 p-4">
+        <SushiGrid sushiList={sushiList} />
+        <PaginationSection totalItems={filteredCount} />
+      </section>
     </div>
   );
 }

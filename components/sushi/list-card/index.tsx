@@ -1,59 +1,46 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { RippleButton } from '@/components/ui/ripple-button';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { T_Sushi } from '@/types/sushi.types';
-import { CircleDotIcon, FishIcon, TrashIcon } from 'lucide-react';
-import { useState } from 'react';
+import { XIcon } from 'lucide-react';
+import { useState, type ReactNode } from 'react';
 import ArchiveSushiDialog from '../delete';
 
 const SushiCard = ({ sushi }: { sushi: T_Sushi }) => {
   const [showArchive, setShowArchive] = useState(false);
   const isNigiri = sushi.type.toLowerCase() === 'nigiri';
   return (
-    <Card data-testid="sushi-card" className="max-w-md pb-4 pt-0">
-      <CardContent className="relative px-0">
+    <Card className="gap-1 py-1.5 pb-3">
+      <CardHeader className="gap-0">
+        <div className="flex flex-row items-center justify-between">
+          <h3 className="text-base font-medium">{sushi.name}</h3>
+          <Button
+            className="w-3! h-6"
+            variant={'ghost'}
+            onClick={() => setShowArchive(true)}
+          >
+            <XIcon className="size-3"></XIcon>
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent className="flex flex-row items-center gap-2">
         <img
           src={sushi.image}
-          alt="Banner"
-          className="h-42 w-full rounded-t-xl object-cover"
+          alt={sushi.name}
+          className="h-14 w-16 rounded-lg object-cover"
         />
-        <div className="absolute right-4 top-4 rounded-full bg-white/95 px-3 py-1.5 shadow-md backdrop-blur-sm">
-          <span className="text-primary text-lg font-bold">${sushi.price}</span>
+        <div className="flex flex-1 flex-col gap-1">
+          {isNigiri ? (
+            <Info label="Fish Type" value={sushi.fishType} />
+          ) : (
+            <Info label="Pieces" value={sushi.pieces} />
+          )}
+          <Info label="Type" value={sushi.type} />
+          <Info
+            label="Price"
+            value={<span className="font-medium">${sushi.price}</span>}
+          />
         </div>
       </CardContent>
-      <CardHeader>
-        <CardTitle data-testid="sushi-card-title">{sushi.name}</CardTitle>
-        <CardDescription className="flex items-center gap-2">
-          <span>{sushi.type}</span>
-          {isNigiri ? (
-            <span className="flex items-center gap-1.5 text-slate-600">
-              <FishIcon className="text-primary h-4 w-4" />
-              <span className="font-medium">{sushi.fishType}</span>
-            </span>
-          ) : (
-            <span className="flex items-center gap-1.5 text-slate-600">
-              <CircleDotIcon className="text-primary h-4 w-4" />
-              <span className="font-medium">{sushi.pieces} pieces</span>
-            </span>
-          )}
-        </CardDescription>
-      </CardHeader>
-      <CardFooter className="justify-end gap-3 max-sm:flex-col max-sm:items-stretch">
-        <RippleButton
-          data-testid="delete-button"
-          size={'sm'}
-          variant={'destructive'}
-          onClick={() => setShowArchive(true)}
-        >
-          <TrashIcon className="text-destructive size-3"></TrashIcon>Archive
-        </RippleButton>
-      </CardFooter>
       <ArchiveSushiDialog
         sushi={sushi}
         open={showArchive}
@@ -64,3 +51,11 @@ const SushiCard = ({ sushi }: { sushi: T_Sushi }) => {
 };
 
 export default SushiCard;
+const Info = ({ label, value }: { label: string; value: ReactNode }) => {
+  return (
+    <div className="flex w-full justify-between">
+      <p className="text-muted-foreground text-[13px]">{label}</p>
+      <p className="text-[13px]">{value}</p>
+    </div>
+  );
+};

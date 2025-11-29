@@ -4,27 +4,30 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
 import { useFilterStore } from '@/store/filter.store';
 import { T_SushiType } from '@/types/sushi.types';
+import { SearchIcon } from 'lucide-react';
 
 export default function FilterSection() {
   const {
     searchQuery,
     typeFilter,
     priceRange,
+    priceSort,
+    nameSort,
     setSearchQuery,
     setTypeFilter,
     setPriceRange,
+    setPriceSort,
+    setNameSort,
   } = useFilterStore();
 
   return (
-    <section className="filters-section flex flex-wrap items-center gap-4">
-      <div className="min-w-[200px] flex-1">
-        <label className="mb-2 block text-sm font-medium">Search</label>
+    <section className="filters-section flex flex-wrap items-center gap-2">
+      <div className="lg:min-w-sm min-w-[180px] flex-1">
         <Input
+          startIcon={SearchIcon}
           data-testid="search-input"
           placeholder="Search by name or fish type..."
           type="search"
@@ -32,14 +35,20 @@ export default function FilterSection() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <div className="w-[180px]">
-        <label className="mb-2 block text-sm font-medium">Type</label>
+      <div>
         <Select
           value={typeFilter}
           onValueChange={(value: T_SushiType) => setTypeFilter(value)}
         >
           <SelectTrigger data-testid="type-filter">
-            <SelectValue placeholder="Select type" />
+            <span>
+              Type:{' '}
+              {typeFilter === 'all'
+                ? 'All'
+                : typeFilter === 'Nigiri'
+                  ? 'Nigiri'
+                  : 'Roll'}
+            </span>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All</SelectItem>
@@ -48,7 +57,53 @@ export default function FilterSection() {
           </SelectContent>
         </Select>
       </div>
-      <div className="w-[250px]">
+      <div>
+        <Select
+          value={priceSort}
+          onValueChange={(value: 'none' | 'asc' | 'desc') =>
+            setPriceSort(value)
+          }
+        >
+          <SelectTrigger data-testid="price-sort">
+            <span>
+              Price:{' '}
+              {priceSort === 'none'
+                ? 'None'
+                : priceSort === 'asc'
+                  ? 'Low to High'
+                  : 'High to Low'}
+            </span>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="none">None</SelectItem>
+            <SelectItem value="asc">Low to High</SelectItem>
+            <SelectItem value="desc">High to Low</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div>
+        <Select
+          value={nameSort}
+          onValueChange={(value: 'none' | 'asc' | 'desc') => setNameSort(value)}
+        >
+          <SelectTrigger data-testid="name-sort">
+            <span>
+              Name:{' '}
+              {nameSort === 'none'
+                ? 'None'
+                : nameSort === 'asc'
+                  ? 'A-Z'
+                  : 'Z-A'}
+            </span>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="none">None</SelectItem>
+            <SelectItem value="asc">A-Z</SelectItem>
+            <SelectItem value="desc">Z-A</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      {/* <div className="w-[250px]">
         <label className="mb-2 block text-sm font-medium">
           Price Range: ${priceRange[0]} - ${priceRange[1]}
         </label>
@@ -61,7 +116,7 @@ export default function FilterSection() {
           onValueChange={(value) => setPriceRange(value as [number, number])}
           className="mt-2"
         />
-      </div>
+      </div> */}
     </section>
   );
 }

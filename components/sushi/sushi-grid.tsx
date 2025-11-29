@@ -9,8 +9,15 @@ interface SushiGridProps {
 }
 
 export default function SushiGrid({ sushiList }: SushiGridProps) {
-  const { searchQuery, typeFilter, priceRange, currentPage, itemsPerPage } =
-    useFilterStore();
+  const {
+    searchQuery,
+    typeFilter,
+    priceRange,
+    priceSort,
+    nameSort,
+    currentPage,
+    itemsPerPage,
+  } = useFilterStore();
 
   // Filter the sushi list based on all filters
   const filteredSushiList = useMemo(() => {
@@ -43,10 +50,39 @@ export default function SushiGrid({ sushiList }: SushiGridProps) {
     return filtered;
   }, [sushiList, searchQuery, typeFilter, priceRange]);
 
+  // Sort the filtered list
+  const sortedSushiList = useMemo(() => {
+    const sorted = [...filteredSushiList];
+
+    // Apply price sort
+    if (priceSort !== 'none') {
+      sorted.sort((a, b) => {
+        const priceA = parseFloat((a.price || '0').replace(/[^0-9.]/g, ''));
+        const priceB = parseFloat((b.price || '0').replace(/[^0-9.]/g, ''));
+        return priceSort === 'asc' ? priceA - priceB : priceB - priceA;
+      });
+    }
+
+    // Apply name sort (takes precedence if both are set)
+    if (nameSort !== 'none') {
+      sorted.sort((a, b) => {
+        const nameA = (a.name || '').toLowerCase();
+        const nameB = (b.name || '').toLowerCase();
+        if (nameSort === 'asc') {
+          return nameA.localeCompare(nameB);
+        } else {
+          return nameB.localeCompare(nameA);
+        }
+      });
+    }
+
+    return sorted;
+  }, [filteredSushiList, priceSort, nameSort]);
+
   // Calculate pagination
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedSushiList = filteredSushiList.slice(startIndex, endIndex);
+  const paginatedSushiList = sortedSushiList.slice(startIndex, endIndex);
 
   return (
     <>

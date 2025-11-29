@@ -25,14 +25,14 @@ const ArchiveSushiDialog = ({
   const archiveMutation = useMutation({
     mutationFn: () => deleteSushi(sushi.id),
     onSuccess: async () => {
-      toast.success(`${sushi.name} archived successfully`);
+      toast.success(`${sushi.name} deleted successfully`);
       await queryClient.invalidateQueries({
         queryKey: [GET_ALL_SUSHI_QUERY_KEY],
       });
     },
     onError: () => {
       toast.error(
-        'Failed to archive item or this item has already been archived'
+        'Failed to delete item or this item has already been deleted'
       );
     },
   });
@@ -41,11 +41,10 @@ const ArchiveSushiDialog = ({
       <AlertDialogContent data-testid="delete-dialog">
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Archive {sushi.name} (${sushi.price})?
+            Delete {sushi.name} (${sushi.price})?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently archive the
-            item.
+            This action cannot be undone. This will permanently delete the item.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -61,7 +60,7 @@ const ArchiveSushiDialog = ({
             onClick={() => archiveMutation.mutate()}
             className="bg-destructive hover:bg-destructive/90 text-white"
           >
-            {archiveMutation.isPending ? 'Archiving...' : 'Archive'}
+            {archiveMutation.isPending ? 'Deleting...' : 'Delete'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
