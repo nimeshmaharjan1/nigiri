@@ -21,14 +21,16 @@ export default function HomePage() {
 
   return (
     <div className="wrapper flex flex-col">
-      <header className="flex justify-between gap-4 border-b bg-white p-4">
+      <header className="flex flex-col items-start gap-4 border-b bg-white p-4 md:flex-row md:justify-between">
         <FilterSection />
-        <RippleButton
-          data-testid="add-sushi-button"
-          onClick={() => setShowAddDialog(true)}
-        >
-          <PlusIcon /> Add
-        </RippleButton>
+        <div className="flex items-center justify-between gap-4 md:justify-end">
+          <RippleButton
+            data-testid="add-sushi-button"
+            onClick={() => setShowAddDialog(true)}
+          >
+            <PlusIcon /> Add
+          </RippleButton>
+        </div>
         <AddSushiDialog open={showAddDialog} onOpenChange={setShowAddDialog} />
       </header>
       <section className="flex flex-col gap-6 p-4">
