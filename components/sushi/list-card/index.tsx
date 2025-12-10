@@ -29,12 +29,13 @@ const SushiCard = ({ sushi }: { sushi: T_Sushi }) => {
           className="h-14 w-16 rounded-lg object-cover"
         />
         <div className="flex flex-1 flex-col gap-1">
+          <Info label="Type" value={sushi.type} />
+
           {isNigiri ? (
-            <Info label="Fish Type" value={sushi.fishType} />
+            <Info label="Fish" value={sushi.fishType ?? '-'} />
           ) : (
             <Info label="Pieces" value={sushi.pieces} />
           )}
-          <Info label="Type" value={sushi.type} />
           <Info
             label="Price"
             value={<span className="font-medium">${sushi.price}</span>}
@@ -54,8 +55,8 @@ export default SushiCard;
 const Info = ({ label, value }: { label: string; value: ReactNode }) => {
   return (
     <div className="flex w-full justify-between">
-      <p className="text-muted-foreground text-[13px]">{label}</p>
-      <p className="text-[13px]">{value}</p>
+      <p className="text-muted-foreground text-[13px] capitalize">{label}</p>
+      <p className="text-[13px] capitalize">{value}</p>
     </div>
   );
 };
