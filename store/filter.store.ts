@@ -29,8 +29,8 @@ const initialState = {
   searchQuery: '',
   typeFilter: 'all' as const,
   priceRange: [0, 100] as [number, number],
-  priceSort: 'asc' as const,
-  nameSort: 'asc' as const,
+  priceSort: 'none' as const,
+  nameSort: 'none' as const,
   currentPage: 1,
   itemsPerPage: 10,
 };
@@ -41,8 +41,12 @@ export const useFilterStore = create<FilterState>((set) => ({
   setSearchQuery: (query) => set({ searchQuery: query, currentPage: 1 }),
   setTypeFilter: (type) => set({ typeFilter: type, currentPage: 1 }),
   setPriceRange: (range) => set({ priceRange: range, currentPage: 1 }),
-  setPriceSort: (sort) => set({ priceSort: sort, currentPage: 1 }),
-  setNameSort: (sort) => set({ nameSort: sort, currentPage: 1 }),
+  // When setting price sort, reset name sort to make them mutually exclusive
+  setPriceSort: (sort) =>
+    set({ priceSort: sort, nameSort: 'none', currentPage: 1 }),
+  // When setting name sort, reset price sort to make them mutually exclusive
+  setNameSort: (sort) =>
+    set({ nameSort: sort, priceSort: 'none', currentPage: 1 }),
   setCurrentPage: (page) => set({ currentPage: page }),
 
   resetFilters: () => set(initialState),
