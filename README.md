@@ -1,4 +1,4 @@
-# Nigiri - Sushi Menu Management System
+# Li2 - Sushi Menu Management System
 
 A modern, type-safe web application for managing a sushi restaurant's menu. Built as a technical demonstration showcasing React best practices, state management, and comprehensive E2E testing.
 

@@ -8,9 +8,12 @@ export const sushiSchema = z.object({
   createdAt: z.string(),
   name: z.string(),
   image: z.string(),
-  price: z.string(),
-  type: sushiTypeSchema,
-  pieces: z.number().optional(),
+  price: z.coerce.string(),
+  type: z.string().transform((val) => {
+    if (val === 'Nigiri' || val === 'Roll') return val;
+    return 'Nigiri' as const; // Default fallback for invalid types
+  }),
+  pieces: z.coerce.number().optional(),
   fishType: z.string().optional(),
 });
 

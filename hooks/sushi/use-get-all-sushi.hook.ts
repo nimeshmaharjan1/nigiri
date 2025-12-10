@@ -16,6 +16,7 @@ const useGetAllSushi = ({ deps, ...options }: QueryProps) => {
   return useQuery<QueryResponse, Error>({
     queryKey: [GET_ALL_SUSHI_QUERY_KEY, deps],
     queryFn: () => getAllSushi(),
+    refetchOnWindowFocus: false,
     ...options,
   });
 };

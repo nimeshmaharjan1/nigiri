@@ -52,7 +52,7 @@ export default function Loading() {
           transition={{ delay: 0.2 }}
         >
           <h3 className="text-foreground text-lg font-medium tracking-widest">
-            NIGIRI
+            Li2
           </h3>
           <p className="text-muted-foreground text-xs tracking-[0.2em]">
             LOADING
